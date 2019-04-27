@@ -1,19 +1,27 @@
 import React from 'react';
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator, createSwitchNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 
 import InitialAuth from './../screens/initialAuth/InitialAuth'
 import SignIn from './../screens/signIn/SignIn'
 import Register from './../screens/register/Register'
 import Dashboard from './../screens/dashboard/Dashboard'
 
-const AppStack = createStackNavigator({ 
+import layout from './../constants/layout'
+
+const AppStack = createDrawerNavigator({ 
   Dashboard: {
     screen: Dashboard,
     navigationOptions: ({navigation}) => ({
       header:null
     })
   }
+},{
+  drawerPosition: 'left',
+  initialRouteName: "Dashboard",
+  drawerBackgroundColor: "grey",
+  drawerWidth: layout.window.width * .8
 });
+
 const AuthStack = createStackNavigator({ 
   SignIn: {
     screen: SignIn,
@@ -32,7 +40,7 @@ const AuthStack = createStackNavigator({
 export default createAppContainer(createSwitchNavigator(
   {
     InitialAuth,
-    Auth: AuthStack,
+    // Auth: AuthStack,
     App: AppStack,
   },
   {
