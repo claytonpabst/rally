@@ -1,5 +1,7 @@
 import React from 'react'
-import {View, Button, Text} from 'react-native'
+import {View, Button, Text, Image} from 'react-native'
+
+import Header from './../../commonComponents/Header'
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -9,11 +11,19 @@ class Dashboard extends React.Component {
     }
   }
 
+  static navigationOptions = {
+    drawerLabel: "Dashboard",
+    drawerIcon: ({tintColor}) => (
+      <Image source={require('./../../assets/images/robot-dev.png')}/>
+    )
+  }
+
   render(){
     const {state, props} = this
 
     return (
       <View>
+        <Header navigation={props.navigation}/>
         <Text>Should be here if user is authorized</Text>
       </View>
     )
