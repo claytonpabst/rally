@@ -2,7 +2,9 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import {SafeAreaView} from 'react-navigation'
 import { AppLoading, Asset, Font, Icon } from 'expo';
+
 import AppNavigator from './navigation/AppNavigator';
+import {AuthContext} from './globalState/AuthContext'
 
 export default class App extends React.Component {
   state = {
@@ -20,10 +22,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <SafeAreaView style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </SafeAreaView>
+        <AuthContext>
+          <SafeAreaView style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </SafeAreaView>
+        </AuthContext>
       );
     }
   }

@@ -4,8 +4,16 @@ import { createAppContainer, createStackNavigator, createSwitchNavigator } from 
 import InitialAuth from './../screens/initialAuth/InitialAuth'
 import SignIn from './../screens/signIn/SignIn'
 import Register from './../screens/register/Register'
+import Dashboard from './../screens/dashboard/Dashboard'
 
-// const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
+const AppStack = createStackNavigator({ 
+  Dashboard: {
+    screen: Dashboard,
+    navigationOptions: ({navigation}) => ({
+      header:null
+    })
+  }
+});
 const AuthStack = createStackNavigator({ 
   SignIn: {
     screen: SignIn,
@@ -25,7 +33,7 @@ export default createAppContainer(createSwitchNavigator(
   {
     InitialAuth,
     Auth: AuthStack,
-    // App: AppStack,
+    App: AppStack,
   },
   {
     initialRouteName: 'InitialAuth',
