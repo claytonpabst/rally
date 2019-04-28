@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Button, Text, Image} from 'react-native'
 
-import Header from './../../commonComponents/Header'
+import Header from '../../commonComponents/MainHeader'
 
 class Dashboard extends React.Component {
   constructor(props){
