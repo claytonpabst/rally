@@ -13,8 +13,8 @@ class AuthContext extends React.Component {
 
   componentDidMount(){
     setTimeout(() => {
-      this.setState({authenticated:true, username: 'Clayton'})
-    }, 1000)
+      this.setState({authenticated:false, username: ''})
+    }, 100)
   }
 
   render() {

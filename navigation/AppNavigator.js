@@ -18,7 +18,7 @@ const AppStack = createDrawerNavigator({
 },{
   drawerPosition: 'left',
   initialRouteName: "Dashboard",
-  drawerBackgroundColor: "grey",
+  drawerBackgroundColor: "#E7E4E9",
   drawerWidth: layout.window.width * .8
 });
 
@@ -40,7 +40,7 @@ const AuthStack = createStackNavigator({
 export default createAppContainer(createSwitchNavigator(
   {
     InitialAuth,
-    // Auth: AuthStack,
+    Auth: AuthStack,
     App: AppStack,
   },
   {

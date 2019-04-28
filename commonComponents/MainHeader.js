@@ -2,7 +2,7 @@ import React from 'react'
 import {View, StyleSheet, Image, TouchableHighlight} from 'react-native'
 import {Left, Button, Text, Header, Icon} from 'native-base'
 
-import layout from './../constants/layout'
+import layout from '../constants/layout'
 
 const MainHeader = (props) => {
   console.log(props)
@@ -21,7 +21,7 @@ export default MainHeader
 
 const screenX = layout.window.width
 const screenY = layout.window.height
-const hamSize = screenX / 9
+const hamSize = screenX / 12
 const s = StyleSheet.create({
   outer: {
     backgroundColor: '#F4F6F8',
