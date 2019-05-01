@@ -1,7 +1,8 @@
 import React from 'react'
-import {View, Button, Text, StyleSheet} from 'react-native'
+import {View, Button, Text, StyleSheet, TouchableHighlight} from 'react-native'
 
 import LogoHeader from './../../commonComponents/LogoHeader'
+import SignInForm from './SignInForm'
 
 class SignIn extends React.Component {
   constructor(props){
@@ -15,11 +16,15 @@ class SignIn extends React.Component {
     const {state, props} = this
 
     return (
-      <View style={{flex:1, backgroundColor: 'orange'}}>
+      <View style={{flex:1}}>
         <LogoHeader/>
-        <View style={s.formWrapper}>
-          <Text>Sign in will happen here</Text>
-          <Button title="Register" onPress={() => props.navigation.navigate("Register")}/>
+        <View style={s.formAreaWrapper}>
+          <View style={s.formHeader}>
+            <Text style={s.formHeaderText}>Sign In</Text>
+          </View>
+          <View style={s.formContent}>
+            <SignInForm navigation={props.navigation}/>
+          </View>
         </View>
       </View>
     )
@@ -29,7 +34,20 @@ class SignIn extends React.Component {
 export default SignIn
 
 const s = StyleSheet.create({
-  formWrapper: {
+  formAreaWrapper: {
     flex: 3
-  }
+  },
+  formHeader: {
+    flex: .7,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  formHeaderText: {
+    color: '#F7567C',
+    fontSize: 35,
+    fontWeight: 'bold'
+  },
+  formContent: {
+    flex: 3,
+  },
 })
