@@ -1,5 +1,6 @@
 import React from 'react'
 import {View, TextInput, Button, TouchableHighlight, StyleSheet} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import layout from './../../constants/layout'
 import FloatingTextInput from './../../commonComponents/FloatingTextInput'
@@ -82,7 +83,17 @@ class RegisterForm extends React.Component {
           <Button color="#fff" title="Register" onPress={this.signIn}/>
         </TouchableHighlight>
         <TouchableHighlight style={s.button}>
-          <Button color="#fff" title="Back" onPress={() => props.navigation.navigate("SignIn")}/>
+          <Button 
+            icon={
+              <Icon
+                name="arrow-left"
+                size={15}
+                color='white'
+              />
+            }
+            color="#fff" title="Back To Sign In" 
+            onPress={() => props.navigation.navigate("SignIn")}
+          />
         </TouchableHighlight>
       </View>
     )

@@ -33,7 +33,7 @@ class SignInForm extends React.Component {
           title="Email/Phone"
           value={state.emailPhone}
           style={s.input}
-          />
+        />
         <FloatingTextInput
           borderBottomColor='#039BE5'
           setInput={this.setInput}

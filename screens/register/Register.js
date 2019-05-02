@@ -21,7 +21,7 @@ class Register extends React.Component {
         <View style={s.formAreaWrapper}>
           <ScrollView style={{flex:1}}>
             <View style={s.formHeader}>
-              <Text style={s.formHeaderText}>Sign In</Text>
+              <Text style={s.formHeaderText}>Register</Text>
             </View>
             <View style={s.formContent}>
               <RegisterForm navigation={props.navigation}/>
