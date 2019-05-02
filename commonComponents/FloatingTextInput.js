@@ -4,10 +4,11 @@ import { string, func } from 'prop-types';
 
 class FloatingTextInput extends Component {
   static propTypes = {
-    attrName: string.isRequired,
+    stateName: string.isRequired,
     title: string.isRequired,
     value: string.isRequired,
-    updateMasterState: func.isRequired,
+    setInput: func.isRequired,
+    borderBottomColor: string.isRequired,
   }
 
   constructor(props) {
@@ -40,8 +41,8 @@ class FloatingTextInput extends Component {
   }
 
   _onChangeText = (updatedValue) => {
-    const { attrName, updateMasterState } = this.props; 
-    updateMasterState(attrName, updatedValue);
+    const { stateName, setInput } = this.props; 
+    setInput(stateName, updatedValue);
   }
 
   _returnAnimatedTitleStyles = () => {
@@ -51,14 +52,14 @@ class FloatingTextInput extends Component {
         inputRange: [0, 1],
         outputRange: [14, 0],
       }),
-      fontSize: isFieldActive ? 11.5 : 15,
-      color: isFieldActive ? 'black' : 'dimgrey',
+      fontSize: isFieldActive ? 11.5 : 18,
+      color: isFieldActive ? 'black' : '#aaa',
     }
   }
 
   render() {
     return (
-      <View style = {Styles.container}>
+      <View style = {{...Styles.container, ...this.props.style}}>
         <Animated.Text
           style = {[Styles.titleStyles, this._returnAnimatedTitleStyles()]}
         >
@@ -81,16 +82,16 @@ export default FloatingTextInput
 
 const Styles = StyleSheet.create({
   container: {
+    padding: 5,
     width: '100%',
-    borderRadius: 3,
     borderStyle: 'solid',
-    borderWidth: 0.5,
+    // borderWidth: 2,
+    borderBottomWidth: 2,
     height: 50,
-    marginVertical: 4,
   },
   textInput: {
-    fontSize: 15,
-    marginTop: 5,
+    fontSize: 18,
+    marginTop: 10,
     fontFamily: 'Avenir-Medium',
     color: 'black',
   },

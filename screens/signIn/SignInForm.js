@@ -2,17 +2,23 @@ import React from 'react'
 import {View, TextInput, Button, TouchableHighlight, StyleSheet} from 'react-native'
 
 import layout from './../../constants/layout'
+import FloatingTextInput from './../../commonComponents/FloatingTextInput'
 
 class SignInForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-
+      emailPhone: '',
+      password: '',
     }
   }
 
+  setInput = (stateName, val) => {
+    this.setState({[stateName]:val})
+  }
+
   signIn = () => {
-    
+
   }
 
   render(){
@@ -20,13 +26,21 @@ class SignInForm extends React.Component {
 
     return (
       <View style={s.outer}>
-        <TextInput
+        <FloatingTextInput
+          borderBottomColor='#039BE5'
+          setInput={this.setInput}
+          stateName="emailPhone"
+          title="Email/Phone"
+          value={state.emailPhone}
           style={s.input}
-          placeholder="email/phone"
-        />
-        <TextInput
+          />
+        <FloatingTextInput
+          borderBottomColor='#039BE5'
+          setInput={this.setInput}
+          stateName="password"
+          title="Password"
+          value={state.password}
           style={s.input}
-          placeholder="Password"
         />
         <TouchableHighlight style={s.button}>
           <Button color="#fff" title="Sign In" onPress={this.signIn}/>
@@ -44,17 +58,18 @@ export default SignInForm
 const s = StyleSheet.create({
   outer: {
     flex: 1,
-    justifyContent: 'space-around',
-    padding: 30
+    // justifyContent: 'space-around',
+    paddingHorizontal: 30,
+    paddingVertical: 20
   },
   input: {
     borderBottomColor: '#039BE5',
-    borderBottomWidth: 2,
-    padding: 15,
+    marginVertical: 10
   },
   button: {
     backgroundColor: '#17B4CB',
-    padding: 13,
+    marginVertical: 10,
+    padding: 10,
     borderRadius: 20
   }
 })
