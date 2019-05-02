@@ -38,7 +38,8 @@ const s = StyleSheet.create({
     flex: 3
   },
   formHeader: {
-    flex: .7,
+    // backgroundColor:'pink',
+    flex: .5,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -48,6 +49,7 @@ const s = StyleSheet.create({
     fontWeight: 'bold'
   },
   formContent: {
+    // backgroundColor: 'orange',
     flex: 3,
   },
 })
