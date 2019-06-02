@@ -19,8 +19,8 @@ const screenY = layout.window.height
 const s = StyleSheet.create({
   outer: {
     backgroundColor: 'pink',
-    flex: 1
-    // padding: 10,
-    // paddingLeft: screenX * .05,
+    flex: 1,
+    padding: 10,
+    paddingLeft: screenX * .05,
   },
 })

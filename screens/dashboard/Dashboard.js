@@ -3,6 +3,7 @@ import {View, Button, Text, Image} from 'react-native'
 
 import Header from '../../commonComponents/MainHeader'
 
+
 class Dashboard extends React.Component {
   constructor(props){
     super(props)
@@ -22,9 +23,10 @@ class Dashboard extends React.Component {
     const {state, props} = this
 
     return (
-      <View>
+      <View style={{flex:1}}>
         <Header navigation={props.navigation}/>
         <Text>Should be here if user is authorized</Text>
+
       </View>
     )
   }
