@@ -1,30 +1,32 @@
 import React from 'react'
 
-const {Provider, Consumer} = React.createContext()
+const { Provider, Consumer } = React.createContext()
 
 class AuthContext extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       authenticated: false,
+      id: null,
       username: ''
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     setTimeout(() => {
-      this.setState({authenticated:false, username: ''})
+      this.setState({ authenticated: true, id: 1, username: 'test' })
     }, 100)
   }
 
   render() {
-    const {props, state} = this
+    const { props, state } = this
 
     return (
       <Provider
         value={{
           authenticated: state.authenticated,
-          username: state.username
+          username: state.username,
+          id: state.id
         }}
       >
         {props.children}
@@ -33,6 +35,6 @@ class AuthContext extends React.Component {
   }
 }
 
-export {AuthContext}
+export { AuthContext }
 
 export default Consumer

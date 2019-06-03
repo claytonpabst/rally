@@ -1,0 +1,71 @@
+CREATE TABLE "session" (
+ "sid" varchar NOT NULL COLLATE "default",
+    "sess" json NOT NULL,
+    "expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+create table user_auth (
+    id   serial primary key,
+    phone varChar(10),
+    email varChar(50),
+    password  text,
+    phone_verification_code  varChar,
+    phone_verified    BOOLEAN
+    
+    )
+
+create table users (
+    id integer,
+    name  varChar(50),
+    picture     text,
+    birth_year  smallInt,
+    location    text,
+    rating      varChar(6),
+    rating_type varChar,
+    about       text,
+    singles     boolean,
+    mixed boolean,
+    gender boolean,
+    open    boolean
+)
+
+create table friends (
+    id  integer,
+    friend_id   integer,
+    friend_request  varChar(10),
+    request_confirmed varChar(10)
+)
+
+insert into user_auth (phone, email, password, phone_verified)
+VALUES ( 4063601423, 'shondas@gmail.com', 'pass', true ) 
+
+insert into users (name, birth_year, location, rating, about, singles, mixed, gender, open)
+VALUES ('Shonda', 1982, '84790', '5.0', 'Lets play', true, true, true, true)
+
+create table games (
+    game_id         serial primary key,	
+    organizer_id	integer,
+    creation_timestamp	timestamp,
+    time_limit	            integer,
+    priority_scheduling	boolean,
+    spots_left	        integer,
+    last_invitee_priority_num	integer,
+    time_to_respond	        integer,
+    game_date	            text,
+    game_time	            text,
+    location	            varChar(100),
+    info	                varChar(255),
+    play_type               varChar(10)
+)
+
+create table invites (
+    game_id         integer,
+    invitee_id      integer,
+    sent_timeStamp  timestamp,
+    Priority_num    integer,
+    status          varChar,
+    response_timeStamp  timestamp
+)
+    
