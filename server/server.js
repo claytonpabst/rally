@@ -12,6 +12,7 @@ const client = require('twilio')
 
 let { SERVER_PORT, CONNECTION_STRING, CONNECTION_STRING_DEV, SESSION_SECRET, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER, STRIPE_SECRET } = process.env
 
+const gc = require('./controllers/game_controller')
 const uc = require('./controllers/user_controller')
 
 
@@ -47,6 +48,12 @@ massive(CONNECTION_STRING).then(db => {
 
 app.get('/api/playerList', uc.playerList)
 app.get('/api/friendsList/:id', uc.friendsList)
+app.get('/api/getMyInfo/:id', uc.getMyInfo)
+app.put('/api/submitProfileChanges/:id', uc.submitProfileChanges)
+
+// game controller
+app.get('/api/getFriendsToInvite/:id', gc.getFriendsToInvite)
+app.post('/api/invite', gc.invite)
 
 
 //SOCKETS

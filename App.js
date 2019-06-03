@@ -1,10 +1,11 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import {SafeAreaView} from 'react-navigation'
+import { SafeAreaView } from 'react-navigation'
 import { AppLoading, Asset, Font, Icon } from 'expo';
 
 import AppNavigator from './navigation/AppNavigator';
-import {AuthContext} from './globalState/AuthContext'
+import { AuthContext } from './globalState/AuthContext'
+
 
 export default class App extends React.Component {
   state = {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
+
         <AppLoading
           startAsync={this._loadResourcesAsync}
           onError={this._handleLoadingError}

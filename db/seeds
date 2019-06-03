@@ -42,4 +42,29 @@ VALUES ( 4063601423, 'shondas@gmail.com', 'pass', true )
 
 insert into users (name, birth_year, location, rating, about, singles, mixed, gender, open)
 VALUES ('Shonda', 1982, '84790', '5.0', 'Lets play', true, true, true, true)
+
+create table games (
+    game_id         serial primary key,	
+    organizer_id	integer,
+    creation_timestamp	timestamp,
+    time_limit	            integer,
+    priority_scheduling	boolean,
+    spots_left	        integer,
+    last_invitee_priority_num	integer,
+    time_to_respond	        integer,
+    game_date	            text,
+    game_time	            text,
+    location	            varChar(100),
+    info	                varChar(255),
+    play_type               varChar(10)
+)
+
+create table invites (
+    game_id         integer,
+    invitee_id      integer,
+    sent_timeStamp  timestamp,
+    Priority_num    integer,
+    status          varChar,
+    response_timeStamp  timestamp
+)
     
