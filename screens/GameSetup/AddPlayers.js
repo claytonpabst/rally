@@ -67,7 +67,7 @@ class AddPlayers extends React.Component {
         let mappedConfirmed = state.preConfirmed.map((player, i) => {
             return (
                 <View key={i} style={{ flex: 1 }} >
-                    <Text style={s.formHeaderText}>status: {player.status} {player.name}</Text>
+                    <Text style={s.name}>{player.name}</Text>
                 </View>
             )
         })
@@ -75,44 +75,47 @@ class AddPlayers extends React.Component {
         let mappedInvited = state.invited.map((player, i) => {
             return (
                 <View key={i} style={{ flex: 1 }} >
-                    <Text style={s.formHeaderText}>{player.name}</Text>
+                    <Text style={s.name}>{player.name}</Text>
                 </View>
             )
         })
 
-        let mappedFriends = state.friends.map((friend, i) => {
-            return (
-                <View key={i} style={{ flex: 1 }} >
-                    {/* <Text onPress={() => this.addPreConfirmed(friend, i)}>Pre</Text>
-                    <Text onPress={() => this.addInvites(friend, i)}>invite</Text> */}
+        // let mappedFriends = state.friends.map((friend, i) => {
+        //     return (
+        //         <View key={i} style={{ flex: 1 }} >
+        //             {/* <Text onPress={() => this.addPreConfirmed(friend, i)}>Pre</Text>
+        //             <Text onPress={() => this.addInvites(friend, i)}>invite</Text> */}
 
-                    <Button
-                        onPress={() => this.addPreConfirmed(friend, i)}
-                        title='Pre'
-                        accessibilityLabel="Pre-Confirm" />
-                    <Button
-                        onPress={() => this.addInvites(friend, i)}
-                        title='Invite'
-                        accessibilityLabel="Invite" />
-                    <Text style={s.formHeaderText} >
-                        {friend.name} </Text>
-                </View>
-            )
-        })
+        // <Button
+        //     onPress={() => this.addPreConfirmed(friend, i)}
+        //     title='Pre'
+        //     accessibilityLabel="Pre-Confirm" />
+        // <Button
+        //     onPress={() => this.addInvites(friend, i)}
+        //     title='Invite'
+        //     accessibilityLabel="Invite" />
+        //             <Text style={s.formHeaderText} >
+        //                 {friend.name} </Text>
+        //         </View>
+        //     )
+        // })
 
         return (
             <View style={{ flex: 1 }}>
                 <Header navigation={props.navigation} />
-                <LogoHeader />
+                {/* <LogoHe
+                ader /> */}
+                <View style={{ height: 300 }}>
+                    <SearchName
+                        friends={this.state.friends}
+                        addPreConfirmed={this.addPreConfirmed}
+                        addInvites={this.addInvites}
+                    />
+                </View>
                 <View style={s.formAreaWrapper}>
                     {/* <SearchName
                         friends={this.state.friends} /> */}
                     <ScrollView style={{ flex: 1 }}>
-                        <View style={s.formHeader}>
-                            <Text style={s.formHeaderText}>Friend List</Text>
-                            {mappedFriends}
-                        </View>
-
 
                         <View style={s.formHeader}>
                             <Text style={s.formHeaderText}>Pre-Confirmed</Text>
@@ -128,6 +131,7 @@ class AddPlayers extends React.Component {
                     </ScrollView>
 
                 </View>
+
                 <Button
                     onPress={() => this.invite()}
                     title='Send'
@@ -162,8 +166,12 @@ const s = StyleSheet.create({
     },
     formHeaderText: {
         color: '#F7567C',
-        fontSize: 35,
+        fontSize: 25,
         fontWeight: 'bold'
+    },
+    name: {
+        color: '#333',
+        fontSize: 20,
     },
     formContent: {
         // backgroundColor: 'orange',

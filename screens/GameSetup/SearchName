@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 
-
 class SearchName extends React.Component {
     constructor(props) {
         super(props);
@@ -12,6 +11,8 @@ class SearchName extends React.Component {
             data: [],
             error: null,
         };
+
+        // this.arrayholder = [];
     }
 
 
@@ -81,17 +82,17 @@ class SearchName extends React.Component {
                             //     onPress={() => this.props.addInvites(friend)}
                             //     title='Invite'
                             //     accessibilityLabel="Invite" />
-                            onPress={() => this.props.addInvites(item)}
+                            onPress={() => this.props.addPreConfirmed(item)}
                             title={`${item.name}`}
                             subtitle={item.rating}
 
 
                         />
-
-
+                        
+                        
                     )}
 
-
+                    
                     keyExtractor={item => item.id}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListHeaderComponent={this.renderHeader}
