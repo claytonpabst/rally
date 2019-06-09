@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Button, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView } from 'react-native'
+import { View, Button, Image, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView } from 'react-native'
+import { CheckBox } from 'react-native-elements'
 import axios from 'axios'
 import AuthContext from '../../globalState/AuthContext'
 import { url } from '../../url'
@@ -9,8 +10,11 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
-            birth_year: null,
+            profile: [],
+            firstName: '',
+            lastName: '',
+            picture: '',
+            birthYear: null,
             location: '',
             rating: '',
             rating_type: null,
@@ -34,11 +38,14 @@ class EditProfile extends React.Component {
     }
 
     getInfo = () => {
+        console.log('hit git info')
         axios.get(`${url.url}/api/getMyInfo/${this.props.id}`).then(res => {
             console.log('getInfo', res.data)
             this.setState({
-                name: res.data[0].name,
-                birth_year: res.data[0].birth_year,
+                firstName: res.data[0].first_name,
+                lastName: res.data[0].last_name,
+                picture: res.data[0].picture,
+                birthYear: res.data[0].birth_year,
                 location: res.data[0].location,
                 rating: res.data[0].rating,
                 rating_type: res.data[0].rating_type,
@@ -55,7 +62,10 @@ class EditProfile extends React.Component {
     }
 
     submitChanges = () => {
-        axios.put(`${url.url}/api/submitProfileChanges/${this.props.id}`, { ...this.state })
+        axios.put(`${url.url}/api/submitProfileChanges/${this.props.id}`, { ...this.state }).
+            then(this.props.navigation.navigate("Dashboard")
+
+            )
     }
 
     setInput = (stateName, val) => {
@@ -71,77 +81,110 @@ class EditProfile extends React.Component {
                 <View style={s.formAreaWrapper}>
                     <ScrollView style={{ flex: 1 }}>
                         <View>
-                            <Text>Name:</Text>
-                            <TextInput
+                            <Image
+                                style={{ width: 75, height: 75 }}
+                                source={{ uri: this.state.picture }}
+                            />
+                            <Text>Name: {this.state.firstName} {this.state.lastName}</Text>
+                            {/* <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(name) => this.setState({ name })}
                                 value={this.state.name}
-                            />
+                            /> */}
                             <Text>Phone Number:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(phone) => this.setState({ phone })}
                                 value={this.state.phone}
+                                returnKeyType='done'
+                                onSubmitEditing={() => { this.email.focus(); }}
+                                blurOnSubmit={false}
                             />
                             <Text>Email:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(email) => this.setState({ email })}
                                 value={this.state.email}
+                                ref={(input) => { this.email = input; }}
+                                returnKeyType={"next"}
+                                onSubmitEditing={() => { this.zipCode.focus(); }}
+                                blurOnSubmit={false}
                             />
-                            <Text>Birth Year:</Text>
+                            <Text>Birth Year: {this.state.birthYear}</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                onChangeText={(birth_year) => this.setState({ birth_year })}
-                                value={this.state.birth_year}
+                                onChangeText={(birthYear) => this.setState({ birthYear })}
+                                value={this.state.birthYear}
+                                keyboardType='numeric'
+                                returnKeyType='done'
+                                maxLength={4}
+
                             />
                             <Text>Zip Code:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(location) => this.setState({ location })}
                                 value={this.state.location}
+                                keyboardType='numeric'
+                                maxLength={5}
+                                ref={(input) => { this.zipCode = input; }}
+                                returnKeyType='done'
+                                onSubmitEditing={() => { this.rating.focus(); }}
+                                blurOnSubmit={false}
                             />
                             <Text>Rating:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(rating) => this.setState({ rating })}
                                 value={this.state.rating}
+                                keyboardType='numeric'
+                                maxLength={3}
+                                ref={(input) => { this.rating = input; }}
+                                returnKeyType='done'
+                                onSubmitEditing={() => { this.ratingType.focus(); }}
+                                blurOnSubmit={false}
                             />
                             <Text>Rating Type:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(rating_type) => this.setState({ rating_type })}
                                 value={this.state.rating_type}
+                                ref={(input) => { this.ratingType = input; }}
+                                returnKeyType='next'
+                                onSubmitEditing={() => { this.about.focus(); }}
+                                blurOnSubmit={false}
                             />
                             <Text>About:</Text>
                             <TextInput
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                                 onChangeText={(about) => this.setState({ about })}
                                 value={this.state.about}
+                                ref={(input) => { this.about = input; }}
+                                // returnKeyType={"done"}
+                                blurOnSubmit={true}
                             />
-                            <Text>Singles?:</Text>
-                            <TextInput
-                                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                onChangeText={(singles) => this.setState({ singles })}
-                                value={this.state.singles}
+                            <Text>Contact me to play:</Text>
+                            <CheckBox
+                                title="Singles"
+                                checked={this.state.singles}
+                                onPress={() => this.setState({ singles: !this.state.singles })}
                             />
-                            <Text>Mixed?:</Text>
-                            <TextInput
-                                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                onChangeText={(mixed) => this.setState({ mixed })}
-                                value={this.state.mixed}
+
+                            <CheckBox
+                                title="Mixed"
+                                checked={this.state.mixed}
+                                onPress={() => this.setState({ mixed: !this.state.mixed })}
                             />
-                            <Text>Gender?</Text>
-                            <TextInput
-                                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                onChangeText={(gender) => this.setState({ gender })}
-                                value={this.state.gender}
+
+                            <CheckBox
+                                title="Gender"
+                                checked={this.state.gender}
+                                onPress={() => this.setState({ gender: !this.state.gender })}
                             />
-                            <Text>Open</Text>
-                            <TextInput
-                                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                onChangeText={(open) => this.setState({ open })}
-                                value={this.state.open}
+                            <CheckBox
+                                title="Open"
+                                checked={this.state.open}
+                                onPress={() => this.setState({ open: !this.state.open })}
                             />
                             <Button color="#123" title="Save Changes" onPress={() => this.submitChanges()} />
                         </View>

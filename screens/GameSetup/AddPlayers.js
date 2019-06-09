@@ -1,5 +1,6 @@
 import React from 'react'
-import { Modal, View, Button, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native'
+import { Modal, View, Button, Text, StyleSheet, FlatList, TouchableHighlight, ScrollView } from 'react-native'
+import { ListItem } from 'react-native-elements';
 import axios from 'axios'
 import { url } from '../../url'
 import AuthContext from '../../globalState/AuthContext'
@@ -16,7 +17,7 @@ class AddPlayers extends React.Component {
         this.state = {
             friends: [],
             preConfirmed:
-                [{ name: this.props.username, status: 'pre', friend_id: this.props.id }],
+                [{ first_name: this.props.username, last_name: '', status: 'pre', friend_id: this.props.id }],
             invited: []
         }
     }
@@ -39,12 +40,13 @@ class AddPlayers extends React.Component {
         this.setState({ preConfirmed: [...this.state.preConfirmed, friend], friends: newFriends })
     }
 
-    addInvites = (friend, i) => {
+    addInvites = friend => {
         let removeFriend = [...this.state.friends]
         friend.status = 'invited'
         let newFriends = removeFriend.filter(person => {
             return person !== friend
         })
+
         this.setState({ invited: [...this.state.invited, friend], friends: newFriends })
     }
 
@@ -63,11 +65,12 @@ class AddPlayers extends React.Component {
     }
 
     render() {
+        console.log('addplayer props', this.props)
         const { state, props } = this
         let mappedConfirmed = state.preConfirmed.map((player, i) => {
             return (
                 <View key={i} style={{ flex: 1 }} >
-                    <Text style={s.name}>{player.name}</Text>
+                    <Text style={s.name}>{player.first_name} {player.last_name}</Text>
                 </View>
             )
         })
@@ -75,36 +78,15 @@ class AddPlayers extends React.Component {
         let mappedInvited = state.invited.map((player, i) => {
             return (
                 <View key={i} style={{ flex: 1 }} >
-                    <Text style={s.name}>{player.name}</Text>
+                    <Text style={s.name}>{player.first_name} {player.last_name}</Text>
                 </View>
             )
         })
 
-        // let mappedFriends = state.friends.map((friend, i) => {
-        //     return (
-        //         <View key={i} style={{ flex: 1 }} >
-        //             {/* <Text onPress={() => this.addPreConfirmed(friend, i)}>Pre</Text>
-        //             <Text onPress={() => this.addInvites(friend, i)}>invite</Text> */}
-
-        // <Button
-        //     onPress={() => this.addPreConfirmed(friend, i)}
-        //     title='Pre'
-        //     accessibilityLabel="Pre-Confirm" />
-        // <Button
-        //     onPress={() => this.addInvites(friend, i)}
-        //     title='Invite'
-        //     accessibilityLabel="Invite" />
-        //             <Text style={s.formHeaderText} >
-        //                 {friend.name} </Text>
-        //         </View>
-        //     )
-        // })
-
         return (
             <View style={{ flex: 1 }}>
                 <Header navigation={props.navigation} />
-                {/* <LogoHe
-                ader /> */}
+                {/* <LogoHeader /> */}
                 <View style={{ height: 300 }}>
                     <SearchName
                         friends={this.state.friends}
@@ -113,12 +95,12 @@ class AddPlayers extends React.Component {
                     />
                 </View>
                 <View style={s.formAreaWrapper}>
-                    {/* <SearchName
-                        friends={this.state.friends} /> */}
+
                     <ScrollView style={{ flex: 1 }}>
 
                         <View style={s.formHeader}>
                             <Text style={s.formHeaderText}>Pre-Confirmed</Text>
+
                             {mappedConfirmed}
                         </View>
 

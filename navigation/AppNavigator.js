@@ -11,6 +11,8 @@ import GameInfo from './../screens/GameSetup/GameInfo'
 import AddPlayers from './../screens/GameSetup/AddPlayers'
 import InviteSent from './../screens/GameSetup/InviteSent'
 import EditProfile from './../screens/Profile/EditProfile'
+import PlayerProfile from './../screens/Profile/PlayerProfile'
+import ViewInvites from './../screens/Invites/ViewInvite'
 
 import layout from './../constants/layout'
 
@@ -44,7 +46,13 @@ const AppStack = createDrawerNavigator({
     navigationOptions: ({ navigation }) => ({
       header: null
     })
-  }
+  },
+  ViewInvites: {
+    screen: ViewInvites,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
 },
 
   {
@@ -90,12 +98,34 @@ const GameStack = createStackNavigator({
   }
 })
 
+const ProfileStack = createStackNavigator({
+  PlayerSearch: {
+    screen: PlayerSearch,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  FriendsList: {
+    screen: FriendsList,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  PlayerProfile: {
+    screen: PlayerProfile,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  }
+})
+
 export default createAppContainer(createSwitchNavigator(
   {
     InitialAuth,
     Auth: AuthStack,
     App: AppStack,
     Game: GameStack,
+    Profile: ProfileStack
   },
   {
     initialRouteName: 'InitialAuth',

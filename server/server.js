@@ -46,13 +46,16 @@ massive(CONNECTION_STRING).then(db => {
 
 // user controller
 
-app.get('/api/playerList', uc.playerList)
+app.get('/api/playerList/:id', uc.playerList)
 app.get('/api/friendsList/:id', uc.friendsList)
 app.get('/api/getMyInfo/:id', uc.getMyInfo)
+app.get('/api/playerProfile/:id', uc.playerProfile)
+app.post('/api/addFriend/:id', uc.addFriend)
 app.put('/api/submitProfileChanges/:id', uc.submitProfileChanges)
 
 // game controller
 app.get('/api/getFriendsToInvite/:id', gc.getFriendsToInvite)
+app.get('/api/getInvite/:id', gc.getInvite)
 app.post('/api/invite', gc.invite)
 
 

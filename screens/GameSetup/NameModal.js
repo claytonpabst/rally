@@ -6,7 +6,7 @@ const NameModal = (props) => {
     let mappedNames = props.friends.map((friend, i) => {
         return (
             <View key={i}>
-                <Text style={s.formHeaderText} onPress={() => props.addPreConfirmed(friend, i)}> {friend.name}</Text>
+                <Text style={s.formHeaderText} onPress={() => props.addPreConfirmed(friend, i)}> {friend.first_name} {friend.last_name}</Text>
             </View>
         )
     })

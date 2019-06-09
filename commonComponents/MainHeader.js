@@ -1,6 +1,6 @@
 import React from 'react'
-import {View, StyleSheet, Image, TouchableHighlight} from 'react-native'
-import {Left, Button, Text, Header, Icon} from 'native-base'
+import { View, StyleSheet, Image, TouchableHighlight } from 'react-native'
+import { Left, Button, Text, Header, Icon } from 'native-base'
 
 import layout from '../constants/layout'
 
@@ -10,10 +10,10 @@ const MainHeader = (props) => {
     <View style={s.outer}>
       <View style={s.contentWrapper}>
         <TouchableHighlight onPress={() => props.navigation.openDrawer()}>
-          <Image style={s.ham} source={require('./../assets/images/ham-menu.png')}/>
+          <Image style={s.ham} source={require('./../assets/images/ham-menu.png')} />
         </TouchableHighlight>
       </View>
-    </View> 
+    </View>
   )
 }
 
