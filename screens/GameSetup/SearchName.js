@@ -34,7 +34,7 @@ class SearchName extends React.Component {
         });
 
         const newData = this.props.friends.filter(item => {
-            const itemData = `${item.rating.toUpperCase()} ${item.name.toUpperCase()} `;
+            const itemData = `${item.rating.toUpperCase()} ${item.first_name.toUpperCase()} ${item.last_name.toUpperCase()} ${item.location.toUpperCase()}`;
             const textData = text.toUpperCase();
 
             return itemData.indexOf(textData) > -1;
@@ -47,7 +47,7 @@ class SearchName extends React.Component {
     renderHeader = () => {
         return (
             <SearchBar
-                placeholder="Type Here..."
+                placeholder="Type Here to Add Friends..."
                 lightTheme
                 round
                 onChangeText={text => this.searchFilterFunction(text)}
@@ -73,20 +73,19 @@ class SearchName extends React.Component {
                         <ListItem
                             leftAvatar={{ source: { uri: item.picture } }}
 
-                            // <Button
-                            //     onPress={() => this.props.addPreConfirmed(friend)}
-                            //     title='Pre'
-                            //     accessibilityLabel="Pre-Confirm" />
-                            // <Button
-                            //     onPress={() => this.props.addInvites(friend)}
-                            //     title='Invite'
-                            //     accessibilityLabel="Invite" />
-                            onPress={() => this.props.addInvites(item)}
-                            title={`${item.name}`}
-                            subtitle={item.rating}
+                            title={`${item.first_name} ${item.last_name}`}
+                            subtitle={`rating: ${item.rating}`}
+                            rightElement={
 
+                                <View>
+                                    <Text onPress={() => this.props.addInvites(item)}>Invite</Text>
 
+                                    <Text onPress={() => this.props.addPreConfirmed(item)}>Pre-Confirm</Text>
+                                </View>}
                         />
+
+
+
 
 
                     )}

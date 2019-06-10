@@ -18,7 +18,8 @@ create table user_auth (
 
 create table users (
     id integer,
-    name  varChar(50),
+    first_name  varChar(50),
+    last_name   varChar(50),
     picture     text,
     birth_year  smallInt,
     location    text,

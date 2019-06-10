@@ -3,45 +3,39 @@ import { View, Button, Text, FlatList, ActivityIndicator, StyleSheet, TouchableH
 import { ListItem, SearchBar } from 'react-native-elements';
 import axios from 'axios'
 import { url } from '../../url'
+
+import Header from '../../commonComponents/MainHeader'
 import AuthContext from '../../globalState/AuthContext'
 
-import LogoHeader from './../../commonComponents/LogoHeader'
-import Header from '../../commonComponents/MainHeader'
 
-
-class PlayerSearch extends React.Component {
+class InviteList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            players: [],
+            invites: [],
             loading: false,
             data: [],
             error: null
+
         }
     }
-    static navigationOptions = {
-        drawerLabel: "Player Search",
 
+    static navigationOptions = {
+        drawerLabel: "Invite List",
     }
 
     componentDidMount() {
-        this.playerList()
+        this.getInvites()
     }
 
-    playerList = () => {
-        axios.get(`${url.url}/api/playerList/${this.props.id}`).then(res => {
-            console.log(res.data)
-            this.setState({ players: res.data, data: res.data })
+    getInvites = () => {
+        axios.get(`${url.url}/api/inviteList/${this.props.id}`).then(res => {
+            this.setState({
+                invites: res.data,
+                data: res.data
+            })
         })
     }
-
-
-    addFriend = (friendId) => {
-        axios.post(`${url.url}/api/addFriend/${this.props.id}`, { friendID: friendId }).then(res => {
-            this.setState({ players: res.data, data: res.data })
-        })
-    }
-
     renderSeparator = () => {
         return (
             <View
@@ -60,8 +54,8 @@ class PlayerSearch extends React.Component {
             value: text,
         });
 
-        const newData = this.state.players.filter(item => {
-            const itemData = `${item.rating.toUpperCase()} ${item.first_name.toUpperCase()} ${item.last_name.toUpperCase()} ${item.location.toUpperCase()} `;
+        const newData = this.state.invites.filter(item => {
+            const itemData = `${item.game_date.toUpperCase()} ${item.location.toUpperCase()} `
             const textData = text.toUpperCase();
 
             return itemData.indexOf(textData) > -1;
@@ -84,7 +78,9 @@ class PlayerSearch extends React.Component {
         );
     };
 
+
     render() {
+
 
         return (
             <View style={{ flex: 1 }}>
@@ -97,30 +93,24 @@ class PlayerSearch extends React.Component {
 
                             onPress={() =>
                                 this.props.navigation.navigate(
-                                    'PlayerProfile',
-                                    { profileId: item.id, screen: 'PlayerSearch' }
+                                    'ViewInvite',
+                                    { gameId: item.game_id }
                                 )}
-
-                            title={`${item.first_name} ${item.last_name}`}
+                            title={` ${item.game_date} ${item.game_time}`}
                             subtitle={
                                 <View>
-                                    <Text>{`${item.rating} ${item.location}`}</Text>
+                                    <Text>{`location: ${item.location} spots left: ${item.spots_left}`}</Text>
                                 </View>
                             }
                             rightElement={
 
                                 <View>
-                                    {item.request_confirmed === 'confirmed' ?
-                                        <Text>Friends</Text> : item.friend_request === 'sent' ?
-                                            <Text>Request Sent</Text> :
-
-
-                                            <Text onPress={() => this.addFriend(item.id)}>add friend</Text>}
+                                    <Text onPress={() => alert('message')}>message</Text>
                                 </View>}
 
                         />
                     )}
-                    keyExtractor={item => item.email}
+                    keyExtractor={item => item.game_id}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListHeaderComponent={this.renderHeader}
 
@@ -133,7 +123,7 @@ class PlayerSearch extends React.Component {
 export default (props => (
     <AuthContext>
         {authContext => (
-            <PlayerSearch
+            <InviteList
                 {...props}
                 authenticated={authContext.authenticated}
                 username={authContext.username}
@@ -142,24 +132,3 @@ export default (props => (
         )}
     </AuthContext>
 ))
-
-const s = StyleSheet.create({
-    formAreaWrapper: {
-        flex: 3
-    },
-    formHeader: {
-        // backgroundColor:'pink',
-        flex: .5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    formHeaderText: {
-        color: '#F7567C',
-        fontSize: 35,
-        fontWeight: 'bold'
-    },
-    formContent: {
-        // backgroundColor: 'orange',
-        flex: 3,
-    },
-})

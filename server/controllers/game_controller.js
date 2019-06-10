@@ -1,6 +1,5 @@
 module.exports = {
     getFriendsToInvite: (req, res) => {
-        // console.log(req.params)
         let { id } = req.params
         const db = req.app.get('db')
         id = parseInt(id)
@@ -12,11 +11,38 @@ module.exports = {
             }
         )
     },
+    getInvite: (req, res) => {
+        console.log('getinvite')
+        let { id } = req.params
+        const db = req.app.get('db')
+        id = parseInt(id)
+
+        db.games.get_invitees({ game_id: id }).then(
+            resp => {
+                // console.log(resp)
+                res.status(200).send(resp)
+            }
+        )
+    },
+
+    inviteList: (req, res) => {
+        console.log('getinviteList')
+        let { id } = req.params
+        const db = req.app.get('db')
+        id = parseInt(id)
+
+        db.games.get_invite_list({ id: id }).then(
+            resp => {
+                // console.log(resp)
+                res.status(200).send(resp)
+            }
+        )
+    },
 
     invite: async (req, res) => {
-        console.log(req.body)
+        console.log('invite', req.body)
         const db = req.app.get('db')
-        let matchInfo = req.body.matchInfo
+        // let matchInfo = req.body.matchInfo
 
 
         await db.games.create_match({
@@ -36,7 +62,7 @@ module.exports = {
                 let priority = ++i
                 priority = parseInt(priority)
 
-                db.games.invite({ match_id: resp[0].game_id, id: confirmed.friend_id, priority_num: 1, status: req.body.invite.status }).then(
+                db.games.invite({ match_id: resp[0].game_id, id: confirmed.friend_id, priority_num: 1, status: confirmed.status }).then(
                     priority => {
                         console.log('resp', priority)
                     }
@@ -47,17 +73,16 @@ module.exports = {
 
 
                 req.body.invite.map((friend, i) => {
+                    console.log('invite', friend)
 
-                    let priority = ++i
+                    let priority = i += 2
                     priority = parseInt(priority)
 
-                    db.games.invite({ match_id: resp[0].game_id, id: friend.friend_id, priority_num: priority, status: req.body.invite.status }).then(
+                    db.games.invite({ match_id: resp[0].game_id, id: friend.friend_id, priority_num: priority, status: friend.status }).then(
                         invite => {
-                            console.log('resp', invite)
 
                         }
                     ).catch(err => {
-                        console.log(err)
                     })
                 })
             )
