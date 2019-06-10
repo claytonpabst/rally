@@ -1,5 +1,7 @@
 import React from 'react'
 import { Modal, View, TextInput, Button, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 import { CheckBox } from 'react-native-elements'
 import AuthContext from '../../globalState/AuthContext'
 import Header from '../../commonComponents/MainHeader'
@@ -12,6 +14,7 @@ class GameInfo extends React.Component {
 
             timeOptions: [{ label: '1hr', value: 60 }, { label: '2hr', value: 120 }, { label: '4hr', value: 240 }, { label: '8hr', value: 480 }, { label: '1 day', value: 1440 }],
             priorityOptions: [{ label: 'none', value: false }, { label: 'priority invite', value: true }],
+            dateTime: '',
             date: '',
             time: '',
             location: '',
@@ -22,7 +25,8 @@ class GameInfo extends React.Component {
             groupLimit: false,
             groupSize: null,
             priority: false,
-            responseTime: null
+            responseTime: null,
+            isDateTimePickerVisible: false
 
 
         }
@@ -38,16 +42,39 @@ class GameInfo extends React.Component {
         this.setState({ playType: playTypeData.value })
     };
 
+    showDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: true });
+    };
+
+    hideDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: false });
+    };
+
+    handleDatePicked = date => {
+        this.setState({ dateTime: date })
+        console.log("A date has been picked: ", date);
+        this.hideDateTimePicker()
+    };
+
+
+
 
 
     render() {
         console.log('state', this.state)
+        let date = this.state.dateTime.slice(1, 10)
         return (
 
             <View style={s.formAreaWrapper}>
                 <Header navigation={this.props.navigation} />
-                <Text>Date</Text>
-                <Text>Time</Text>
+                <Button title="Select Date and Time" onPress={this.showDateTimePicker} />
+                <DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this.handleDatePicked}
+                    onCancel={this.hideDateTimePicker}
+                    mode="datetime"
+                />
+                {date}
                 <Text>Play Type</Text>
                 <CheckBox
                     title="Doubles"

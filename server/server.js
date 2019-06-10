@@ -56,7 +56,9 @@ app.put('/api/submitProfileChanges/:id', uc.submitProfileChanges)
 // game controller
 app.get('/api/getFriendsToInvite/:id', gc.getFriendsToInvite)
 app.get('/api/getInvite/:id', gc.getInvite)
+app.get('/api/inviteList/:id', gc.inviteList)
 app.post('/api/invite', gc.invite)
+
 
 
 //SOCKETS

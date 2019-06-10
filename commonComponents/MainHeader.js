@@ -5,7 +5,7 @@ import { Left, Button, Text, Header, Icon } from 'native-base'
 import layout from '../constants/layout'
 
 const MainHeader = (props) => {
-  console.log(props)
+  console.log('main header', props)
   return (
     <View style={s.outer}>
       <View style={s.contentWrapper}>

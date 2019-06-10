@@ -18,10 +18,8 @@ class ViewInvite extends React.Component {
     }
 
     static navigationOptions = {
-        drawerLabel: "View Invite",
-        drawerIcon: ({ tintColor }) => (
-            <Image source={require('./../../assets/images/robot-dev.png')} />
-        )
+        drawerLabel: 'ViewInvite'
+
     }
 
     componentDidMount() {
@@ -29,7 +27,7 @@ class ViewInvite extends React.Component {
     }
 
     getInvite = () => {
-        axios.get(`${url.url}/api/getInvite/46`).then(res => {
+        axios.get(`${url.url}/api/getInvite/${this.props.navigation.state.params.gameId}`).then(res => {
             console.log('getinvite', res.data)
             this.setState({ invite: res.data, info: res.data[0] })
         })

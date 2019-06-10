@@ -25,6 +25,20 @@ module.exports = {
         )
     },
 
+    inviteList: (req, res) => {
+        console.log('getinviteList')
+        let { id } = req.params
+        const db = req.app.get('db')
+        id = parseInt(id)
+
+        db.games.get_invite_list({ id: id }).then(
+            resp => {
+                // console.log(resp)
+                res.status(200).send(resp)
+            }
+        )
+    },
+
     invite: async (req, res) => {
         console.log('invite', req.body)
         const db = req.app.get('db')
