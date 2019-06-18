@@ -110,7 +110,19 @@ module.exports = {
             )
 
         )
-    }
+    },
+    inviteResponse: (req, res) => {
+        console.log('inviteResponse', req.body)
+        let { gameId, response, userId } = req.body
+        const db = req.app.get('db')
+
+        db.games.invite_response({ game_id: gameId, status: response, invitee_id: userId }).then(
+            resp => {
+                console.log('invite response res', resp)
+                res.status(200).send(resp)
+            }
+        )
+    },
 
     // let matchId = db.games.create_match({
     //     organizer_id: req.body.matchInfo.coordinatorId,

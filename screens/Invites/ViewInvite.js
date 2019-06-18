@@ -33,6 +33,12 @@ class ViewInvite extends React.Component {
         })
     }
 
+    sendResponse = (response) => {
+        axios.put(`${url.url}/api/inviteResponse`, { gameId: this.props.navigation.state.params.gameId, response: response, userId: this.props.id }).then(res => {
+            this.setState({ invite: res.data, info: res.data[0] })
+        })
+    }
+
     renderSeparator = () => {
         return (
             <View
@@ -90,6 +96,9 @@ class ViewInvite extends React.Component {
                     keyExtractor={item => item.email}
                     ItemSeparatorComponent={this.renderSeparator}
                 />
+
+                <Button color="#123" title="Yes" onPress={() => this.sendResponse('confirmed')} />
+                <Button color="#123" title="No" onPress={() => this.sendResponse('no')} />
             </View>
         )
     }

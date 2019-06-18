@@ -59,8 +59,9 @@ app.get('/api/getFriendsToInvite/:id', gc.getFriendsToInvite)
 app.get('/api/getInvite/:id', gc.getInvite)
 app.get('/api/inviteList/:id', gc.inviteList)
 app.post('/api/invite', gc.invite)
+app.put('/api/inviteResponse', gc.inviteResponse)
 
-//Chat Controler
+//Chat Controller
 app.get('/api/getMessages/:room', cc.getMessages)
 
 
