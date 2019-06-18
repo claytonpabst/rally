@@ -54,6 +54,8 @@ create table games (
     spots_left	        integer,
     last_invitee_priority_num	integer,
     time_to_respond	        integer,
+    game_dateTime           text,
+    UTC_dateTime            text,
     game_date	            text,
     game_time	            text,
     location	            varChar(100),
@@ -70,3 +72,15 @@ create table invites (
     response_timeStamp  timestamp
 )
     
+
+
+create table chat (
+_id serial primary key,
+room    varchar,
+text   text,
+createdAt   TIMESTAMP,
+user_id     integer
+)
+
+insert into chat( room, text, createdAt, user_id)
+VALUES ('38', 'hello world', now(), 1)

@@ -48,6 +48,7 @@ class ViewInvite extends React.Component {
 
 
     render() {
+        console.log('view invite props', this.props.navigation.state.params.gameId)
         const { state, props } = this
         let confirmed = state.invite.filter(obj => obj.status === 'pre')
         let waiting = state.invite.filter(obj => obj.status === 'invited')
@@ -55,6 +56,12 @@ class ViewInvite extends React.Component {
         return (
             <View style={{ flex: 1 }}>
                 <Header navigation={props.navigation} />
+
+                <Button color="#123" title="Chat" onPress={() => this.props.navigation.navigate("GroupChat", {
+                    gameId: this.props.navigation.state.params.gameId
+                })} />
+
+
                 <Text>View Invite</Text>
                 <Text>date: {state.info.game_date}</Text>
                 <Text>Location: {state.info.game_location} </Text>
