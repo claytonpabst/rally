@@ -55,7 +55,7 @@ create table games (
     last_invitee_priority_num	integer,
     time_to_respond	        integer,
     game_dateTime           text,
-    UTC_dateTime            text,
+    UTC_dateTime            timestamp,
     game_date	            text,
     game_time	            text,
     location	            varChar(100),
