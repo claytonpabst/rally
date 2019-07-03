@@ -17,7 +17,7 @@ class AddPlayers extends React.Component {
         this.state = {
             friends: [],
             preConfirmed:
-                [{ first_name: this.props.username, last_name: '', status: 'pre', friend_id: this.props.id }],
+                [],
             invited: []
         }
     }

@@ -15,6 +15,7 @@ import PlayerProfile from './../screens/Profile/PlayerProfile'
 import ViewInvite from './../screens/Invites/ViewInvite'
 import InviteList from './../screens/Invites/InviteList'
 import GroupChat from './../screens/Chat/GroupChat'
+import Chat from './../screens/Chat/Chat'
 
 import layout from './../constants/layout'
 
@@ -93,6 +94,12 @@ const ProfileStack = createStackNavigator({
   },
   PlayerProfile: {
     screen: PlayerProfile,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  Chat: {
+    screen: Chat,
     navigationOptions: ({ navigation }) => ({
       header: null
     })

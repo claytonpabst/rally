@@ -8,8 +8,7 @@ set spots_left = group_size - (select count(*) as count_test
 from invites
 where status = 'confirmed'  or status = 'pre')
 where game_id = ${game_id};
-
-
+    
 select g.game_id, invitee_id, first_name, last_name, status, organizer_id, spots_left, game_date, game_time, g.location, info, play_type, u.picture
 from invites i
 join users u on u.id = i.invitee_id

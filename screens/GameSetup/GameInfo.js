@@ -24,7 +24,7 @@ class GameInfo extends React.Component {
             singlesChecked: false,
             doublesChecked: true,
             note: '',
-            groupLimit: false,
+            groupLimit: null,
             groupSize: 0,
             priority: false,
             responseTime: null,

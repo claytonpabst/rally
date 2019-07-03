@@ -36,6 +36,8 @@ class ViewInvite extends React.Component {
     sendResponse = (response) => {
         axios.put(`${url.url}/api/inviteResponse`, { gameId: this.props.navigation.state.params.gameId, response: response, userId: this.props.id }).then(res => {
             this.setState({ invite: res.data, info: res.data[0] })
+        }).catch(err => {
+            alert('Sorry all spots are taken')
         })
     }
 
@@ -52,9 +54,15 @@ class ViewInvite extends React.Component {
         );
     };
 
+    goBack = () => {
+        this.props.navigation.state.params.getInvites()
+        this.props.navigation.goBack()
+    }
+
 
     render() {
-        console.log('view invite props', this.props.navigation.state.params.gameId)
+        console.log('view invite props', this.props.navigation.state.params)
+        console.log('status', this.state.info.status)
         const { state, props } = this
         let confirmed = state.invite.filter(obj => obj.status === 'pre')
         let waiting = state.invite.filter(obj => obj.status === 'invited')
@@ -62,6 +70,8 @@ class ViewInvite extends React.Component {
         return (
             <View style={{ flex: 1 }}>
                 <Header navigation={props.navigation} />
+                <Button color="#123" title="Go Back" onPress={
+                    this.goBack} />
 
                 <Button color="#123" title="Chat" onPress={() => this.props.navigation.navigate("GroupChat", {
                     gameId: this.props.navigation.state.params.gameId
@@ -72,11 +82,12 @@ class ViewInvite extends React.Component {
                 <Text>date: {state.info.game_date}</Text>
                 <Text>Location: {state.info.game_location} </Text>
                 <Text>Info: {state.info.info}</Text>
+                <Text>Coordinator {state.info.organizer_id}</Text>
                 <Text>Confirmed</Text>
                 <FlatList
                     data={confirmed}
                     renderItem={({ item }) => (
-                        <ListItem
+                        < ListItem
                             leftAvatar={{ source: { uri: item.picture } }}
                             title={`${item.first_name} ${item.last_name}`}
                         />
@@ -96,9 +107,11 @@ class ViewInvite extends React.Component {
                     keyExtractor={item => item.email}
                     ItemSeparatorComponent={this.renderSeparator}
                 />
-
-                <Button color="#123" title="Yes" onPress={() => this.sendResponse('confirmed')} />
-                <Button color="#123" title="No" onPress={() => this.sendResponse('no')} />
+                {this.state.info.status === "confirmed" ? <Text>You are confirmed status </Text> :
+                    <Button color="#123" title="Yes" onPress={() => this.sendResponse('confirmed')} />}
+                {this.state.invite.status === 'no' ? <Text>You responded no</Text> :
+                    <Button color="#123" title="No" onPress={() => this.sendResponse('no')} />}
+                {this.state.info.organizer_id === this.props.id ? <Button color="#123" title="Add Player" onPress={() => alert()} /> : <View></View>}
             </View>
         )
     }

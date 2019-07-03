@@ -86,6 +86,8 @@ class InviteList extends React.Component {
             <View style={{ flex: 1 }}>
                 <Header navigation={this.props.navigation} />
                 <FlatList
+
+
                     data={this.state.data}
                     renderItem={({ item }) => (
                         <ListItem
@@ -94,7 +96,7 @@ class InviteList extends React.Component {
                             onPress={() =>
                                 this.props.navigation.navigate(
                                     'ViewInvite',
-                                    { gameId: item.game_id }
+                                    { gameId: item.game_id, getInvites: this.getInvites }
                                 )}
                             title={`${item.game_date} ${item.game_time}`}
                             subtitle={

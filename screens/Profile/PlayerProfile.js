@@ -89,6 +89,13 @@ class PlayerProfile extends React.Component {
                     checked={profile.open}
 
                 />
+                <Text
+                    onPress={() =>
+                        this.props.navigation.navigate(
+                            "Chat",
+                            { friendId: profile.id, fName: profile.first_name, lName: profile.last_name }
+                        )}>Message
+                                        </Text>
 
             </View>
         )

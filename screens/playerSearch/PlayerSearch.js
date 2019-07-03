@@ -74,7 +74,7 @@ class PlayerSearch extends React.Component {
     renderHeader = () => {
         return (
             <SearchBar
-                placeholder="Type Here..."
+                placeholder="Search by name, rating, zipcode"
                 lightTheme
                 round
                 onChangeText={text => this.searchFilterFunction(text)}

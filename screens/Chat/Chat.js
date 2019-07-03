@@ -9,7 +9,7 @@ import Header from '../../commonComponents/MainHeader'
 import AuthContext from '../../globalState/AuthContext'
 
 
-class GroupChat extends React.Component {
+class Chat extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -22,13 +22,12 @@ class GroupChat extends React.Component {
 
 
     static navigationOptions = {
-        drawerLabel: "GroupChat"
+        drawerLabel: "Chat"
     }
 
     componentDidMount() {
         this.setSocketListeners()
         this.joinChatRoom()
-        this.getMessages()
 
     }
 
@@ -47,13 +46,26 @@ class GroupChat extends React.Component {
     }
 
     joinChatRoom = async () => {
-        console.log('hit joinchatroom')
-        await this.socket.emit('joinRoom', `${this.props.navigation.state.params.gameId}`)
-        // this.getChat()
+        let myId = this.props.id
+        let friendId = this.props.navigation.state.params.friendId
+        let highUser
+        let lowUser
+        if (myId > friendId) {
+            highUser = myId
+            lowUser = friendId
+        } else {
+            highUser = friendId
+            lowUser = myId
+        }
+        const roomId = highUser + ':' + lowUser
+        console.log(roomId)
+        await this.setState({ room: roomId })
+        this.socket.emit('joinRoom', roomId)
+        this.getMessages()
     }
 
     getMessages = () => {
-        axios.get(`${url.url}/api/getMessages/${this.props.navigation.state.params.gameId}`).then(res => {
+        axios.get(`${url.url}/api/getMessages/${this.state.room}`).then(res => {
             console.log('messages', res.data)
             this.setState({
                 messages: res.data
@@ -64,7 +76,7 @@ class GroupChat extends React.Component {
     sendMessage = (messages) => {
         console.log(4545, messages[0].createdAt)
         this.socket.emit('sendMsg', {
-            room: `${this.props.navigation.state.params.gameId}`,
+            room: `${this.state.room}`,
             text: messages[0].text,
             createdAt: messages[0].createdAt,
             user_id: this.props.id
@@ -74,19 +86,18 @@ class GroupChat extends React.Component {
 
 
     render() {
-        console.log('group chat gameId', this.props.navigation.state.params.gameId)
+        console.log('chat friendId', this.props.navigation.state.params.friendId)
 
 
         return (
             <View style={{ flex: 1 }}>
                 <Header navigation={this.props.navigation} />
-                <Button color="#123" title="Go Back" onPress={() => this.props.navigation.goBack()} />
                 {/* <Button color="#123" title="Play Details" onPress={() => this.props.navigation.navigate("ViewInvite", {
                     gameId: this.props.navigation.state.params.gameId
                 })} /> */}
 
 
-                <Text>Group Chat</Text>
+                <Text>Chat with {this.props.navigation.state.params.fName} {this.props.navigation.state.params.lName}</Text>
                 <GiftedChat
                     messages={this.state.messages}
                     onSend={messages => this.sendMessage(messages)}
@@ -106,7 +117,7 @@ class GroupChat extends React.Component {
 export default (props => (
     <AuthContext>
         {authContext => (
-            <GroupChat
+            <Chat
                 {...props}
                 authenticated={authContext.authenticated}
                 username={authContext.username}

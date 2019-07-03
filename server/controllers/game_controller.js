@@ -18,13 +18,14 @@ module.exports = {
             }
         )
     },
-    getInvite: (req, res) => {
+    getInvite: async (req, res) => {
         console.log('getinvite')
         let { id } = req.params
         const db = req.app.get('db')
         id = parseInt(id)
 
-        db.games.get_invitees({ game_id: id }).then(
+
+        db.games.get_invite({ game_id: id }).then(
             resp => {
                 // console.log(resp)
                 res.status(200).send(resp)
@@ -32,11 +33,15 @@ module.exports = {
         )
     },
 
-    inviteList: (req, res) => {
+    inviteList: async (req, res) => {
         console.log('getinviteList')
         let { id } = req.params
         const db = req.app.get('db')
         id = parseInt(id)
+        // let spotsFilled = await db.games.get_count({ game_id: id })
+        // let groupSize = await db.games.group_size({ game_id: id })
+        // console.log('spotsFilled', groupSize[0].group_size, 'size', spotsFilled[0].count)
+        // let spotsLeft = await +groupSize[0].group_size - +spotsFilled[0].count
 
         db.games.get_invite_list({ id: id }).then(
             resp => {
@@ -53,9 +58,10 @@ module.exports = {
 
 
         await db.games.create_match({
-            organizer_id: matchInfo.coordinatorId,
+            organizer_id: req.body.coordinatorId,
             time_limit: 60,
             priority_scheduling: false,
+            group_size: matchInfo.groupSize,
             spots_left: matchInfo.groupSize,
             last_invitee_priority_num: 0,
             dateTime: matchInfo.dateTime,
@@ -72,7 +78,7 @@ module.exports = {
                 let priority = ++i
                 priority = parseInt(priority)
 
-                db.games.invite({ match_id: resp[0].game_id, id: confirmed.friend_id, priority_num: 1, status: confirmed.status }).then(
+                db.games.invite({ match_id: resp[0].game_id, id: confirmed.friend_id, priority_num: 1, status: 'confirmed' }).then(
                     priority => {
                         console.log(priority[0], '+1' + priority[0].phone)
 
@@ -103,6 +109,7 @@ module.exports = {
                     db.games.invite({ match_id: resp[0].game_id, id: friend.friend_id, priority_num: priority, status: friend.status }).then(
                         invite => {
 
+
                         }
                     ).catch(err => {
                     })
@@ -111,18 +118,28 @@ module.exports = {
 
         )
     },
-    inviteResponse: (req, res) => {
+    inviteResponse: async (req, res) => {
         console.log('inviteResponse', req.body)
         let { gameId, response, userId } = req.body
         const db = req.app.get('db')
-
-        db.games.invite_response({ game_id: gameId, status: response, invitee_id: userId }).then(
-            resp => {
-                console.log('invite response res', resp)
-                res.status(200).send(resp)
+        if (response === 'confirmed') {
+            let spotsLeft = await db.games.spots_left({ game_id: gameId })
+            console.log('spots left', spotsLeft)
+            if (spotsLeft[0].spots_left === 0) {
+                console.log('spots taken')
+                return res.sendStatus(409)
             }
-        )
-    },
+
+
+            db.games.invite_response({ game_id: gameId, status: response, invitee_id: userId }).then(
+                resp => {
+                    console.log('invite response res NO', resp)
+                    res.status(200).send(resp)
+                })
+
+
+        }
+    }
 
     // let matchId = db.games.create_match({
     //     organizer_id: req.body.matchInfo.coordinatorId,
