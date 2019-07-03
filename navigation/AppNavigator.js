@@ -14,54 +14,12 @@ import EditProfile from './../screens/Profile/EditProfile'
 import PlayerProfile from './../screens/Profile/PlayerProfile'
 import ViewInvite from './../screens/Invites/ViewInvite'
 import InviteList from './../screens/Invites/InviteList'
+import GroupChat from './../screens/Chat/GroupChat'
+import Chat from './../screens/Chat/Chat'
 
 import layout from './../constants/layout'
 
-const AppStack = createDrawerNavigator({
-  Dashboard: {
-    screen: Dashboard,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  },
-  PlayerSearch: {
-    screen: PlayerSearch,
-    navigationOptions: ({ navigation }) => ({
-      // header: null
-    })
-  },
-  FriendsList: {
-    screen: FriendsList,
-    navigationOptions: ({ navigation }) => ({
-      // header: null
-    })
-  },
-  GameInfo: {
-    screen: GameInfo,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  },
-  EditProfile: {
-    screen: EditProfile,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  },
-  InviteList: {
-    screen: InviteList,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  }
-},
 
-  {
-    drawerPosition: 'left',
-    initialRouteName: "Dashboard",
-    drawerBackgroundColor: "#E7E4E9",
-    drawerWidth: layout.window.width * .8
-  });
 
 const AuthStack = createStackNavigator({
   SignIn: {
@@ -100,9 +58,21 @@ const GameStack = createStackNavigator({
 })
 
 const InviteStack = createStackNavigator({
+  InviteList: {
+    screen: InviteList,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
 
   ViewInvite: {
     screen: ViewInvite,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  GroupChat: {
+    screen: GroupChat,
     navigationOptions: ({ navigation }) => ({
       header: null
     })
@@ -127,8 +97,57 @@ const ProfileStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: null
     })
+  },
+  Chat: {
+    screen: Chat,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
   }
 })
+
+const AppStack = createDrawerNavigator({
+  Dashboard: {
+    screen: Dashboard,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  PlayerSearch: {
+    screen: ProfileStack,
+    navigationOptions: ({ navigation }) => ({
+      // header: null
+    })
+  },
+  FriendsList: {
+    screen: FriendsList,
+    navigationOptions: ({ navigation }) => ({
+      // header: null
+    })
+  },
+  GameInfo: {
+    screen: GameStack
+  },
+  EditProfile: {
+    screen: EditProfile,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  InviteList: {
+    screen: InviteStack,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  }
+},
+
+  {
+    drawerPosition: 'left',
+    initialRouteName: "Dashboard",
+    drawerBackgroundColor: "#E7E4E9",
+    drawerWidth: layout.window.width * .8
+  });
 
 export default createAppContainer(createSwitchNavigator(
   {

@@ -1,0 +1,1 @@
+select spots_left from games where game_id = ${game_id}

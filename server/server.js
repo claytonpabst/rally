@@ -14,6 +14,7 @@ let { SERVER_PORT, CONNECTION_STRING, CONNECTION_STRING_DEV, SESSION_SECRET, TWI
 
 const gc = require('./controllers/game_controller')
 const uc = require('./controllers/user_controller')
+const cc = require('./controllers/chat_controller')
 
 
 
@@ -58,6 +59,10 @@ app.get('/api/getFriendsToInvite/:id', gc.getFriendsToInvite)
 app.get('/api/getInvite/:id', gc.getInvite)
 app.get('/api/inviteList/:id', gc.inviteList)
 app.post('/api/invite', gc.invite)
+app.put('/api/inviteResponse', gc.inviteResponse)
+
+//Chat Controller
+app.get('/api/getMessages/:room', cc.getMessages)
 
 
 
@@ -68,12 +73,9 @@ const io = socket(app.listen(SERVER_PORT, '0.0.0.0', () => console.log(`002 Serv
 
 
 io.on('connection', function (socket) {
-  socket.on('joinRoom', async room => {
-    console.log('room', room)
-    const db = app.get('db')
-    // let messages = await db.chat.get_message_history({room: room})
+  socket.on('joinRoom', room => {
+    console.log('join room', room)
     socket.join(room)
-    // io.to(room).emit('sendMsg', messages)
   })
 
   socket.on('leaveRoom', function (roomName) {
@@ -82,24 +84,18 @@ io.on('connection', function (socket) {
 
   socket.on('sendMsg', async data => {
     console.log(data)
-    const { room, msg, user } = data;
+    let { room, text, user_id, createdAt } = data;
+    console.log('room is', room)
     const db = app.get('db');
-    await db.chat.create_message({ room: room, message: msg, user_name: user })
+    await db.chat.create_message({ room: room, text: text, user_id: user_id, createdAt: createdAt })
     // let messageReceived = {
     //   msg:data.msg,
     //   user: data.user,
     //   room: data.room
     // }
-    let messages = await db.chat.get_message_history({ room: room })
+    let messages = await db.chat.get_chat({ room: room })
     // console.log(room)
     io.to(data.room).emit('sendMsg', messages)
   })
 
-  socket.on('scoreChanged', function (data) {
-    io.to('scoreWatcher').emit('scoreChanged')
-  })
-
-  socket.on('oneScoreChanged', function (room) {
-    io.to(room).emit('oneScoreChanged')
-  })
 })

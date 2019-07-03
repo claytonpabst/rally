@@ -86,20 +86,23 @@ class InviteList extends React.Component {
             <View style={{ flex: 1 }}>
                 <Header navigation={this.props.navigation} />
                 <FlatList
+
+
                     data={this.state.data}
                     renderItem={({ item }) => (
                         <ListItem
-                            leftAvatar={{ source: { uri: item.picture } }}
+                            // leftAvatar={<Text>{item.game_date}</Text>}
 
                             onPress={() =>
                                 this.props.navigation.navigate(
                                     'ViewInvite',
-                                    { gameId: item.game_id }
+                                    { gameId: item.game_id, getInvites: this.getInvites }
                                 )}
-                            title={` ${item.game_date} ${item.game_time}`}
+                            title={`${item.game_date} ${item.game_time}`}
                             subtitle={
                                 <View>
-                                    <Text>{`location: ${item.location} spots left: ${item.spots_left}`}</Text>
+                                    <Text>{`location: ${item.location}`}</Text>
+                                    <Text>{`spots left: ${item.spots_left}`}</Text>
                                 </View>
                             }
                             rightElement={

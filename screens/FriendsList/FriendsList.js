@@ -101,7 +101,13 @@ class FriendsList extends React.Component {
                             rightElement={
 
                                 <View>
-                                    <Text onPress={() => alert('message')}>message</Text>
+                                    <Text
+                                        onPress={() =>
+                                            this.props.navigation.navigate(
+                                                "Chat",
+                                                { friendId: item.friend_id, fName: item.first_name, lName: item.last_name }
+                                            )}>Message
+                                        </Text>
                                 </View>}
 
                         />

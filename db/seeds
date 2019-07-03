@@ -51,9 +51,12 @@ create table games (
     creation_timestamp	timestamp,
     time_limit	            integer,
     priority_scheduling	boolean,
+    group_size integer,
     spots_left	        integer,
     last_invitee_priority_num	integer,
     time_to_respond	        integer,
+    game_dateTime           text,
+    UTC_dateTime            timestamp,
     game_date	            text,
     game_time	            text,
     location	            varChar(100),
@@ -70,3 +73,39 @@ create table invites (
     response_timeStamp  timestamp
 )
     
+
+
+create table chat (
+_id serial primary key,
+room    varchar,
+text   text,
+createdAt   TIMESTAMP,
+user_id     integer
+)
+
+insert into chat( room, text, createdAt, user_id)
+VALUES ('38', 'hello world', now(), 1)
+
+
+
+update invites
+set status = 'not sure',
+    response_timestamp = now()
+where invitee_id = 2 and game_id = 1
+
+
+returning (select count(*) as count_test
+from invites
+where status = 'confirmed'  or status = 'pre') ;
+
+update games
+set spots_left = group_size - count_test
+where game_id = 1
+
+
+
+update games
+set spots_left = group_size - (select count(*) as count_test
+from invites
+where status = 'confirmed'  or status = 'pre')
+where game_id = 1
