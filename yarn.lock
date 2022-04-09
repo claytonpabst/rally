@@ -5630,10 +5630,10 @@ moment-timezone@^0.5.23:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.19.0, moment@^2.22.2, moment@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+"moment@>= 2.9.0", moment@^2.19.0, moment@^2.22.2, moment@^2.24.0, moment@^2.29.2:
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 morgan@^1.9.0:
   version "1.9.1"
@@ -8505,3 +8505,8 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+
+zipcodes@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/zipcodes/-/zipcodes-8.0.0.tgz#4d124cdeedfc693f1b0ef8060323f206aeb98a9b"
+  integrity sha512-V8NolFaJhsPamGeCv5lJdk60Q7JBiXI6e+8JDksPC1NJWZ0t7g1OFfqVLZb2Nc2F5jmf9JTdYdWJBnIhGBvtbA==
